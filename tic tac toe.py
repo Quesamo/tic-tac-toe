@@ -133,7 +133,7 @@ class TicTacToeClass(): #the program's main class
         #fills a random cell
         while True:
 
-            rand_cell = random.randint(1, len(self.cells))
+            rand_cell = random.randint(1, len(self.cells)-1)
 
             if self.cells[rand_cell] == self.PLAYER_SYMBOL or self.cells[rand_cell] == self.AI_SYMBOL:
                 continue
