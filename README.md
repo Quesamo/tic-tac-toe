@@ -18,5 +18,7 @@ Note that you'll need to restart the entire game if you want to play again, for 
 
 
 1|2|3
+
 4|5|6
+
 7|8|9
