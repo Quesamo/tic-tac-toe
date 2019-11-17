@@ -5,6 +5,13 @@ Requirements for installation:
   - Working computer (turned on)
   - Python 3
  
- How to install:
+How to install:
   1. Unpack and run the .py file.
   2. Profit.
+
+How to play:
+  - Enter the number of the cell you wanna fill (refer to the table below for positions)
+  - Watch as the AI makes its move
+  - Repeat until victory/loss/draw
+  
+Note that you'll need to restart the entire game if you want to play again, for now. This will be changed soon^TM.
