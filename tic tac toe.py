@@ -76,12 +76,12 @@ class TicTacToeClass(): #the program's main class
     #makes the AI's move
     def ai_move(self):
 
-        #this function works in 3 parts, organised after their priority:
-        #1. checks if there are any recognised winning placements 1 piece away from being completed. fills the placement if so
-        #2. checks if it is able to put a piece next to one it's already placed. fills if so
-        #3. fills a random cell
-
-
+        '''
+        this function works in 3 parts, organised after their priority:
+        1. checks if there are any recognised winning placements 1 piece away from being completed. fills the placement if so
+        2. checks if it is able to put a piece next to one it's already placed. fills if so
+        3. fills a random cell
+        '''
 
         
         #checks if there is 2 pieces of a winning placement belonging to the same player, present on the board
@@ -170,8 +170,9 @@ class TicTacToeClass(): #the program's main class
     #starts the main loop of the game
     def run(self):
 
-        #the first board display and user input are outside of the loop
-        #this prevents the program from checking if anyone has won before a move has been made
+        
+        '''the first board display and user input are outside of the loop
+        #this prevents the program from checking if anyone has won before a move has been made'''
         self.stats.games_increment()
         self.display_board()
         print("(Enter a number from 1-9)")
@@ -261,9 +262,4 @@ tictactoe.run()
 123
 456
 789
-
-
-TO DO:
-
-Make AI prioritise winning over blocking when both players are 1 piece away from winning
 '''
