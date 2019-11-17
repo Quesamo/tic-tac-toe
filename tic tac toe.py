@@ -7,9 +7,9 @@ class TicTacToeClass(): #the program's main class
 
     def __init__(self):
         
-        self.cells = {}
-        for i in range(1, 10):
-            self.cells[f'cell_{i}'] = ' ' #the cells start out empty
+        self.cells = ['filler value'] #filler value to avoid messing up indexing
+        for _ in range(1, 10):
+            self.cells.append(' ') #the cells start out empty
 
         
         #consts for what symbol each party can place on the board
@@ -40,9 +40,9 @@ class TicTacToeClass(): #the program's main class
         #updates the board before display
         #this entire string is the board
         self.board = f"""
-        {self.cells['cell_1']}|{self.cells['cell_2']}|{self.cells['cell_3']}
-        {self.cells['cell_4']}|{self.cells['cell_5']}|{self.cells['cell_6']}
-        {self.cells['cell_7']}|{self.cells['cell_8']}|{self.cells['cell_9']}"""
+        {self.cells[1]}|{self.cells[2]}|{self.cells[3]}
+        {self.cells[4]}|{self.cells[5]}|{self.cells[6]}
+        {self.cells[7]}|{self.cells[8]}|{self.cells[9]}"""
         
         self.clear_screen()
         print(self.board)
@@ -61,16 +61,18 @@ class TicTacToeClass(): #the program's main class
         #takes input until it gets a valid one
         while True:
             
-            player_move = input()
-            
             try:
-                if int(player_move) in range(1, 10) and self.cells[f'cell_{player_move}'] == ' ':
-                    self.cells[f'cell_{player_move}'] = self.PLAYER_SYMBOL
-                    return
-                else:
-                    print("That's not a valid move!")
+                player_move = int(input())
             except ValueError:
                 print("That's not a valid move!")
+                continue
+        
+            if player_move in range(1, 10) and self.cells[player_move] == ' ':
+                self.cells[player_move] = self.PLAYER_SYMBOL
+                return
+            else:
+                print("That's not a valid move!")
+            
 
     
     #makes the AI's move
@@ -92,12 +94,12 @@ class TicTacToeClass(): #the program's main class
             cell_dict = {} #cell number : is filled?
             
             for cell in placement:
-                if self.cells[f'cell_{cell}'] == self.AI_SYMBOL:
+                if self.cells[int(cell)] == self.AI_SYMBOL:
                     cell_dict[cell] = True
                     ai_counter += 1
                
-                elif self.cells[f'cell_{cell}'] == self.PLAYER_SYMBOL:
-                    cell_dict[cell] = True
+                elif self.cells[int(cell)] == self.PLAYER_SYMBOL:
+                    cell_dict[int(cell)] = True
                     player_counter += 1
                 else:
                     cell_dict[cell] = False
@@ -106,23 +108,23 @@ class TicTacToeClass(): #the program's main class
             if (ai_counter >= 2 or player_counter >= 2) and player_counter + ai_counter < 3:
                 for key, value in cell_dict.items():
                     if value == False:
-                        self.cells[f'cell_{key}'] = self.AI_SYMBOL
+                        self.cells[int(key)] = self.AI_SYMBOL
                         return
 
 
         #fills a cell next to one it's already placed in
-        for cell in random.sample(list(self.cells), len(self.cells)):
-            if self.cells[cell] == self.AI_SYMBOL:
+        for cell_number in random.sample(range(1, len(self.cells)), 1):
+            if self.cells[int(cell_number)] == self.AI_SYMBOL:
                 try:
                     #if the cell is one capable of getting a 3 in a row diagonally
-                    if any(cell == 'cell_' + str(i) for i in [1, 3, 5, 7, 9]): 
+                    if any(cell == i for i in [1, 3, 5, 7, 9]): 
                         #subtracts/adds a random number from a list to place a new piece relative to it. sets, because it's supposed to be random
                         for i in set([-1, 1, -3, 3, -4, 4, 2, -2]):
-                            self.cells[f'cell_{cell[-1] + i}'] = self.AI_SYMBOL
+                            self.cells[cell_number + i] = self.AI_SYMBOL
                             return
                     else:    
                         for i in set([-1, 1, -3, 3]):
-                            self.cells[f'cell_{cell[-1] + i}'] = self.AI_SYMBOL
+                            self.cells[cell_number + i] = self.AI_SYMBOL
                             return
                 except:
                     continue
@@ -131,12 +133,12 @@ class TicTacToeClass(): #the program's main class
         #fills a random cell
         while True:
 
-            rand_cell_key = random.choice(list(self.cells))
+            rand_cell = random.randint(1, len(self.cells))
 
-            if self.cells[rand_cell_key] == self.PLAYER_SYMBOL or self.cells[rand_cell_key] == self.AI_SYMBOL:
+            if self.cells[rand_cell] == self.PLAYER_SYMBOL or self.cells[rand_cell] == self.AI_SYMBOL:
                 continue
             else:
-                self.cells[rand_cell_key] = self.AI_SYMBOL
+                self.cells[rand_cell] = self.AI_SYMBOL
                 return
 
     
@@ -145,20 +147,20 @@ class TicTacToeClass(): #the program's main class
 
         #checks if the player has won
         for placement in self.winning_placements:
-            if all(self.cells[f'cell_{cell}'] == self.PLAYER_SYMBOL for cell in placement):
+            if all(self.cells[int(cell)] == self.PLAYER_SYMBOL for cell in placement):
                 self.player_victory = True
                 self.stats.win_streak_increment()
                 return
         
         #checks if the AI has won
         for placement in self.winning_placements:
-            if all(self.cells[f'cell_{cell}'] == self.AI_SYMBOL for cell in placement):
+            if all(self.cells[int(cell)] == self.AI_SYMBOL for cell in placement):
                 self.ai_victory = True
                 self.stats.win_streak_reset()
                 return
 
         #checks if all the cells are filled (draw)
-        if all(value is not ' ' for value in self.cells.values()):
+        if all(value is not ' ' for value in self.cells):
             self.draw = True
             return
 
