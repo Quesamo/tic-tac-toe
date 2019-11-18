@@ -176,34 +176,39 @@ class TicTacToeClass(): #the program's main class
         '''the first board display and user input are outside of the loop
         #this prevents the program from checking if anyone has won before a move has been made'''
         self.stats.games_increment()
-        self.display_board()
         print("(Enter a number from 1-9)")
 
-        while True:
-            self.player_move()
-            self.display_board()
-            self.board_check()
-            if self.player_victory or self.ai_victory or self.draw:
-                break
-            print('The AI is making a move...')
-            sleep(random.uniform(0.5, 2))
-            self.ai_move()
-            self.display_board()
-            self.board_check()
-            if self.player_victory or self.ai_victory or self.draw:
-                break
-        
+        while True: #loop the entire program
+            while True: #loop for each game
+                self.display_board()
+                self.player_move()
+                self.display_board()
+                self.board_check()
+                if self.player_victory or self.ai_victory or self.draw:
+                    break
+                print('The AI is making a move...')
+                sleep(random.uniform(0.5, 2))
+                self.ai_move()
+                self.display_board()
+                self.board_check()
+                if self.player_victory or self.ai_victory or self.draw:
+                    break
+            
 
-        if self.player_victory:
-            print('The player wins!')
-            win_streak_stats = self.stats.read_stats()['win_streak']
-            print(f"You're on a {win_streak_stats['current']} win streak! (Longest: {win_streak_stats['longest']})")
-        elif self.ai_victory:
-            print('The AI wins.')
-        elif self.draw:
-            print('Draw!')
-        
-        input()
+            if self.player_victory:
+                print('The player wins!')
+                win_streak_stats = self.stats.read_stats()['win_streak']
+                print(f"You're on a {win_streak_stats['current']} win streak! (Longest: {win_streak_stats['longest']})")
+            elif self.ai_victory:
+                print('The AI wins.')
+            elif self.draw:
+                print('Draw!')
+
+            if input("Play again? (y/n)\n") == 'y':
+                self.__init__()
+                continue
+            else:
+                break
         
 
 #the class containing the methods for handling stats
