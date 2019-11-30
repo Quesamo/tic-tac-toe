@@ -14,8 +14,6 @@ How to play:
   - Watch as the AI makes its move
   - Repeat until victory/loss/draw
   
-Note that you'll need to restart the entire game if you want to play again, for now. This will be changed soon^TM.
-
 
 1|2|3
 
